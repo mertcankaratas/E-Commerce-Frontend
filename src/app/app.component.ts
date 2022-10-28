@@ -1,6 +1,4 @@
-import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 import { Component } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 declare var $:any
 @Component({
   selector: 'app-root',
@@ -15,4 +13,5 @@ export class AppComponent {
   }
 
 }
+
 
