@@ -1,6 +1,8 @@
+import { ListComponent } from './list/list.component';
+import { CreateProduct } from './../../../contracts/products/create-product';
 import { HttpClientService } from './../../../services/common/http-client.service';
 import { BaseComponent, SpinnerType } from './../../../base/base.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 
@@ -19,6 +21,11 @@ export class ProductsComponent extends BaseComponent implements OnInit {
     this.showSpinner(SpinnerType.BallAtom);
 
 
+  }
+
+   @ViewChild(ListComponent) listComponents :ListComponent;
+  createdProduct(createdProduct:CreateProduct): void{
+    this.listComponents.getProducts();
   }
 
 }

@@ -1,15 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { AlertifyService, MessageType, Position } from './../../../../services/admin/alertify.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BaseComponent, SpinnerType } from './../../../../base/base.component';
+import { ProductService } from 'src/app/services/common/models/product.service';
+import { ListProduct } from './../../../../contracts/products/list-product';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends BaseComponent implements OnInit {
 
-  constructor() { }
+  constructor(spinner:NgxSpinnerService ,private productService:ProductService,private alertifyService:AlertifyService) {
+    super(spinner);
+   }
 
-  ngOnInit(): void {
+  displayedColumns: string[] = ['name', 'stock','price', 'createdDate','updatedDate'];
+  dataSource:MatTableDataSource<ListProduct>=null;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
+  async getProducts(){
+    this.showSpinner(SpinnerType.BallAtom);
+      const allProducts:{totalCount:number;products: ListProduct[]} = await this.productService.read(this.paginator? this.paginator.pageIndex : 0,this.paginator ? this.paginator.pageSize :5,()=>this.hideSpinner(SpinnerType.BallAtom),errorMessage=>this.alertifyService.message(errorMessage,{
+        dismissOthers:true,
+        messageType:MessageType.Error,
+        position:Position.TopRight
+      }))
+
+      this.dataSource = new MatTableDataSource<ListProduct>(allProducts.products);
+      this.paginator.length = allProducts.totalCount;
+
+  }
+
+  async pageChanged(){
+    await this.getProducts();
+  }
+  async ngOnInit() {
+      await this.getProducts();
   }
 
 }
