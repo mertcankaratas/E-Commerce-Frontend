@@ -12,9 +12,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { DeleteDirective } from './directives/admin/delete.directive';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+
 
   ],
   imports: [
