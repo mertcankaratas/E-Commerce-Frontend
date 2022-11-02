@@ -6,6 +6,7 @@ import { ListProduct } from './../../../../contracts/products/list-product';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+declare var $:any;
 
 @Component({
   selector: 'app-list',
@@ -18,7 +19,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     super(spinner);
    }
 
-  displayedColumns: string[] = ['name', 'stock','price', 'createdDate','updatedDate'];
+  displayedColumns: string[] = ['name', 'stock','price', 'createdDate','updatedDate','edit','delete'];
   dataSource:MatTableDataSource<ListProduct>=null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -35,6 +36,12 @@ export class ListComponent extends BaseComponent implements OnInit {
       this.paginator.length = allProducts.totalCount;
 
   }
+
+  // delete(id,event){
+
+  //   const img:HTMLImageElement=event.srcElement;
+  //   $(img.parentElement.parentElement).fadeOut(2000);
+  // }
 
   async pageChanged(){
     await this.getProducts();
