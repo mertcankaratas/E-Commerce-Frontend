@@ -1,3 +1,4 @@
+import { FileUploadModule } from './../../../services/common/file-upload/file-upload.module';
 import { DeleteDialogComponent } from './../../../dialogs/delete-dialog/delete-dialog.component';
 import { DeleteDirective } from './../../../directives/admin/delete.directive';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -34,7 +35,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    FileUploadModule
   ]
 
 })
