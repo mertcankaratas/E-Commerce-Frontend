@@ -7,7 +7,7 @@ import { NgxFileDropEntry } from 'ngx-file-drop';
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent  {
-  public files: NgxFileDropEntry[] = [];
+  public files: NgxFileDropEntry[] ;
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
