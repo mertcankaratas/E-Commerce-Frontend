@@ -1,3 +1,4 @@
+import { DialogService } from './../../services/common/dialog.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AlertifyService, MessageType, Position } from './../../services/admin/alertify.service';
 import { HttpClientService } from './../../services/common/http-client.service';
@@ -6,6 +7,7 @@ import { SpinnerType } from './../../base/base.component';
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';
+import { async } from 'rxjs';
 declare var $:any;
 @Directive({
   selector: '[appDelete]'
@@ -17,7 +19,8 @@ export class DeleteDirective {
     private httpCLientService:HttpClientService,
     private spinner:NgxSpinnerService,
     public dialog: MatDialog,
-    private alertifyService:AlertifyService)
+    private alertifyService:AlertifyService,
+    private dialogService:DialogService)
     {
       const img =_renderer.createElement("img");
       img.setAttribute("src","./../../../../../assets/delete.png");
@@ -33,7 +36,11 @@ export class DeleteDirective {
     @Output() callback:EventEmitter<any>=new EventEmitter;
     @HostListener("click")
    async  onClick(){
-      this.openDialog(async()=>{
+
+    this.dialogService.openDialog({
+      componentType:DeleteDialogComponent,
+      data:DeleteState.Yes,
+      afterClosed: async()=>{
         this.spinner.show(SpinnerType.BallAtom);
         const td:HTMLTableCellElement=this.element.nativeElement;
 
@@ -62,23 +69,11 @@ export class DeleteDirective {
           });
         });
 
-      });
+      }
+    })
 
     }
 
-
-    openDialog(afterClosed:any): void {
-      const dialogRef = this.dialog.open(DeleteDialogComponent, {
-        width: '250px',
-        data:DeleteState.Yes,
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if(result==DeleteState.Yes){
-          afterClosed();
-        }
-      });
-    }
   }
 
 

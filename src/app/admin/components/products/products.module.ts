@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import { DialogModule } from 'src/app/dialogs/dialog.module';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     CreateComponent,
     ListComponent,
     DeleteDirective,
-    DeleteDialogComponent
+
   ],
   imports: [
     CommonModule,
@@ -35,7 +36,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDialogModule,
+    DialogModule,
     FileUploadModule
   ]
 
