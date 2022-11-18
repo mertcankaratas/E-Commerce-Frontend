@@ -1,3 +1,5 @@
+import { SpinnerType, BaseComponent } from './../../../base/base.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogService } from './../dialog.service';
 import { FileUploadDialogComponent } from './../../../dialogs/file-upload-dialog/file-upload-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,10 +17,11 @@ import { FileUploadDialogState } from 'src/app/dialogs/file-upload-dialog/file-u
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss']
 })
-export class FileUploadComponent  {
+export class FileUploadComponent extends BaseComponent  {
 
   constructor(private httpCLientService:HttpClientService,private alertifyService:AlertifyService,private customToastrService:CustomToastrService,private dialog:MatDialog,
-    private dialogService:DialogService){
+    private dialogService:DialogService,spinner:NgxSpinnerService){
+      super(spinner);
 
   }
   public files: NgxFileDropEntry[] ;
@@ -37,6 +40,7 @@ export class FileUploadComponent  {
       componentType:FileUploadDialogComponent,
       data:FileUploadDialogState.Yes,
       afterClosed:()=>{
+        this.showSpinner(SpinnerType.BallAtom)
         this.httpCLientService.post({
           controller:this.options.controller,
           action:this.options.action,
@@ -57,7 +61,7 @@ export class FileUploadComponent  {
             });
 
           }
-
+          this.hideSpinner(SpinnerType.BallAtom);
         },(errorResponse:HttpErrorResponse)=>{
 
           const message : string ="Dosyalar yüklenirken beklenmeyen bir hatayla karşılaşılmıştır";
@@ -74,7 +78,7 @@ export class FileUploadComponent  {
             });
 
           }
-
+          this.hideSpinner(SpinnerType.BallAtom);
         });
       }
     });
