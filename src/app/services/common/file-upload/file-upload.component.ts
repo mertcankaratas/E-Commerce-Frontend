@@ -48,6 +48,7 @@ export class FileUploadComponent extends BaseComponent  {
           headers:new HttpHeaders({"responseType":"blob"}),
         },fileData).subscribe(data=>{
           const message : string ="Dosyalar başarı ile yüklenmiştir"
+          debugger;
           if(this.options.isAdminPage){
             this.alertifyService.message(message,{
               dismissOthers:true,

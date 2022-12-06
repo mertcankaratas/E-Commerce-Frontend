@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)" >
+      <div class="mb-3">
+        <label for="adSoyad" class="form-label">Ad Soyad </label>
+        <input type="text" formControlName="adSoyad" class="form-control" id="adSoyad" placeholder="Ad Soyad" aria-describedby="emailHelp" [ngClass]="{'is-invalid': submitted && component.adSoyad.errors}">
+        <div  class="form-text" *ngIf="submitted && component.adSoyad.errors">Lütfen Ad ve Soyadı boş geçmeyiniz.</div>
+        <div  class="form-text" *ngIf="submitted && (component.adSoyad.errors || component.adSoyad.errors.maxlength)">Lütfen Ad ve Soyadı boş geçmeyiniz.</div>
+      </div>
+      <div class="mb-3">
+        <label for="kullaniciAdi" class="form-label">Kullanıcı Adı </label>
+        <input type="text" formControlName="kullaniciAdi" class="form-control" id="kullaniciAdi" placeholder="Kullanıcı Adı" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text" style="display:none;">We'll never share your email with anyone else.</div>
+
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email </label>
+        <input type="email" formControlName="email" class="form-control" id="email"  placeholder="Email" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text" style="display:none;">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Şifre </label>
+        <input type="password" formControlName="sifre" class="form-control" id="password">
+      </div>
+      <div class="mb-3">
+        <label for="sifreTekrar"  class="form-label">Şifre Tekrar </label>
+        <input type="password" formControlName="sifreTekrar" class="form-control" id="sifreTekrar">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+    </form>
+  </div>
+  <div class="col-md-3"></div>
+
+</div>
