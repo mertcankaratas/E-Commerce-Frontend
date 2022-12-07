@@ -1,5 +1,6 @@
+import { User } from './../../../entities/user';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -22,10 +23,18 @@ export class RegisterComponent implements OnInit {
       email:["",[Validators.required,
         Validators.maxLength(250),
         Validators.email]],
-      sifre:[""],
-      sifreTekrar:[""],
+      sifre:["",[Validators.required]],
+      sifreTekrar:["",[Validators.required]],
 
 
+    },{
+      validators:(group:AbstractControl): ValidationErrors | null=>{
+        let pass = group.get("sifre").value;
+        let passAgain = group.get("sifreTekrar").value;
+
+
+        return pass ===passAgain ? null:{notSame:true};
+      }
     })
   }
 
@@ -34,11 +43,13 @@ export class RegisterComponent implements OnInit {
   }
 
   submitted: boolean = false;
-  onSubmit(data:any){
+  onSubmit(data:User){
     this.submitted =true;
     if(this.frm.invalid)
       return;
-    debugger;
+
+      debugger;
+
   }
 
 }

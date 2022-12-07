@@ -5,27 +5,31 @@
       <div class="mb-3">
         <label for="adSoyad" class="form-label">Ad Soyad </label>
         <input type="text" formControlName="adSoyad" class="form-control" id="adSoyad" placeholder="Ad Soyad" aria-describedby="emailHelp" [ngClass]="{'is-invalid': submitted && component.adSoyad.errors}">
-        <div  class="form-text" *ngIf="submitted && component.adSoyad.errors">Lütfen Ad ve Soyadı boş geçmeyiniz.</div>
-        <div  class="form-text" *ngIf="submitted && (component.adSoyad.errors || component.adSoyad.errors.maxlength)">Lütfen Ad ve Soyadı boş geçmeyiniz.</div>
+        <div  class="form-text" *ngIf="submitted && component.adSoyad.errors?.required">Lütfen Ad ve Soyadı boş geçmeyiniz.</div>
+        <div  class="form-text" *ngIf="submitted && component.adSoyad.errors?.maxlength">Lütfen Ad ve Soyadı 3 ile 50 karakter arasında giriniz.</div>
       </div>
       <div class="mb-3">
         <label for="kullaniciAdi" class="form-label">Kullanıcı Adı </label>
-        <input type="text" formControlName="kullaniciAdi" class="form-control" id="kullaniciAdi" placeholder="Kullanıcı Adı" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text" style="display:none;">We'll never share your email with anyone else.</div>
+        <input type="text" formControlName="kullaniciAdi" class="form-control" id="kullaniciAdi" placeholder="Kullanıcı Adı" [ngClass]="{'is-invalid': submitted && component.kullaniciAdi.errors}" aria-describedby="emailHelp">
+        <div  class="form-text" *ngIf="submitted &&  component.kullaniciAdi.errors?.required">Lütfen kullanıcı adını booş geçmeyiniz .</div>
 
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email </label>
-        <input type="email" formControlName="email" class="form-control" id="email"  placeholder="Email" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text" style="display:none;">We'll never share your email with anyone else.</div>
+        <input type="email" formControlName="email" class="form-control" id="email"  placeholder="Email" [ngClass]="{'is-invalid': submitted && component.email.errors}" aria-describedby="emailHelp">
+        <div  class="form-text" *ngIf="submitted &&  component.email.errors?.required">Lütfen Email'i boş geçmeyiniz.</div>
+        <div  class="form-text" *ngIf="submitted &&  component.email.errors?.email">Lütfen Email'i uygun formatta giriniz</div>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Şifre </label>
-        <input type="password" formControlName="sifre" class="form-control" id="password">
+        <input type="password" formControlName="sifre" class="form-control" placeholder="şifre" id="password" [ngClass]="{'is-invalid': submitted && component.sifre.errors}">
+
       </div>
+
       <div class="mb-3">
         <label for="sifreTekrar"  class="form-label">Şifre Tekrar </label>
-        <input type="password" formControlName="sifreTekrar" class="form-control" id="sifreTekrar">
+        <input type="password" formControlName="sifreTekrar" class="form-control" placeholder="şifre tekrar"  id="sifreTekrar" [ngClass]="{'is-invalid': submitted && component.sifreTekrar.errors}">
+        <div  class="form-text" *ngIf="submitted && frm.hasError('notSame')">Lütfen şifreyi doğrulayınız</div>
       </div>
 
       <button type="submit" class="btn btn-primary">Kayıt Ol</button>
