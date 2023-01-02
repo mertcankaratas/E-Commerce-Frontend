@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AdminModule } from './admin/admin.module';
 
@@ -37,6 +37,7 @@ import {JwtModule} from '@auth0/angular-jwt';
   providers: [
     {provide:"baseUrl",useValue:"https://localhost:7110/api",multi:true}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
