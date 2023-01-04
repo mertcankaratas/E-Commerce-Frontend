@@ -15,19 +15,23 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="products">Ürünler</a>
           </li>
-          <li>
-            <a routerLink="admin" class="btn btn-outline-success" type="submit">Yönetim Paneli</a>
-          </li>
+
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="basket">Sepet</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="register">Kayıt Ol</a>
+            <a class="nav-link active" aria-current="page" routerLink="register" *ngIf="!authService.isAuthenticated">Kayıt Ol</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="login">Giriş Yap</a>
+            <a class="nav-link active" aria-current="page" routerLink="login" *ngIf="!authService.isAuthenticated">Giriş Yap</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"(click)="signOut()" style="color:red; cursor: pointer;" *ngIf="authService.isAuthenticated">Çıkış Yap</a>
+          </li>
+          <li>
+            <a routerLink="admin" class="btn btn-outline-success" type="submit" *ngIf="authService.isAuthenticated">Yönetim Paneli</a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown
             </a>
@@ -40,13 +44,13 @@
           </li>
           <li class="nav-item">
             <a class="nav-link disabled">Disabled</a>
-          </li>
+          </li> -->
 
         </ul>
-        <form class="d-flex" role="search">
+        <!-- <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button  class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        </form> -->
       </div>
     </div>
   </nav>
