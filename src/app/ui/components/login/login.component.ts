@@ -4,6 +4,7 @@ import { UserService } from './../../../services/common/models/user.service';
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 
-  constructor(private userService:UserService,spinner:NgxSpinnerService,private authService:AuthService,private activatedRoute:ActivatedRoute,private router:Router ) {
+  constructor(private userService:UserService,spinner:NgxSpinnerService,private authService:AuthService,private activatedRoute:ActivatedRoute,private router:Router,private socialAuthService:SocialAuthService ) {
     super(spinner);
+    socialAuthService.authState.subscribe((user: SocialUser)=>{
+      console.log(user);
+    })
    }
 
   ngOnInit(): void {

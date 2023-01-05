@@ -16,7 +16,7 @@ import { BasketsModule } from './baskets/baskets.module';
     HomeModule,
     BasketsModule,
     RegisterModule,
-    LoginModule
+    //LoginModule
   ]
 })
 export class ComponentsModule { }
