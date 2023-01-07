@@ -1,3 +1,5 @@
+import { TokenResponse } from './../../../contracts/Token/token-response';
+import { HttpClientService } from './../../../services/common/http-client.service';
 import { AuthService } from './../../../services/common/auth.service';
 import { BaseComponent, SpinnerType } from './../../../base/base.component';
 import { UserService } from './../../../services/common/models/user.service';
@@ -17,7 +19,12 @@ export class LoginComponent extends BaseComponent implements OnInit {
     super(spinner);
     socialAuthService.authState.subscribe((user: SocialUser)=>{
       console.log(user);
-    })
+      this.showSpinner(SpinnerType.BallAtom);
+      userService.googleLogin(user,()=>{
+        this.authService.identityCheck();
+        this.hideSpinner(SpinnerType.BallAtom)
+      })
+    });
    }
 
   ngOnInit(): void {
