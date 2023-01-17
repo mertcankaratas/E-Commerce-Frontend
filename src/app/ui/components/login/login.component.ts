@@ -20,10 +20,17 @@ export class LoginComponent extends BaseComponent implements OnInit {
     socialAuthService.authState.subscribe((user: SocialUser)=>{
       console.log(user);
       this.showSpinner(SpinnerType.BallAtom);
-      userService.googleLogin(user,()=>{
-        this.authService.identityCheck();
-        this.hideSpinner(SpinnerType.BallAtom)
-      })
+      switch(user.provider){
+        case "GOOGLE":
+          userService.googleLogin(user,()=>{
+            this.authService.identityCheck();
+            this.hideSpinner(SpinnerType.BallAtom)
+          })
+        break;
+        case "FACEBOOK":
+
+        break;
+      }
     });
    }
 

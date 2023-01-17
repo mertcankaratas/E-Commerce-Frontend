@@ -11,7 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
-import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@abacritt/angularx-social-login';
+import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@abacritt/angularx-social-login';
 
 
 @NgModule({
@@ -47,6 +47,10 @@ import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider("386152893539-jfi0c7k7evdtpbvut1u6v7l7d4538ush.apps.googleusercontent.com")
+          },
+          {
+            id:FacebookLoginProvider.PROVIDER_ID,
+            provider:new FacebookLoginProvider("508037971445243")
           }
         ],
         onError: err => console.log(err)
