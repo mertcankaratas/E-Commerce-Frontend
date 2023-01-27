@@ -20,22 +20,22 @@ export class LoginComponent extends BaseComponent implements OnInit {
     socialAuthService.authState.subscribe(async (user: SocialUser)=>{
       console.log(user);
       this.showSpinner(SpinnerType.BallAtom);
-      switch(user.provider){
+      switch (user.provider) {
         case "GOOGLE":
-         await userService.googleLogin(user,()=>{
-
+          await userService.googleLogin(user, () => {
+            this.authService.identityCheck();
+            this.hideSpinner(SpinnerType.BallAtom);
           })
-        break;
+          break;
         case "FACEBOOK":
-          await userService.facebookLogin(user,()=>{
-
+          await userService.facebookLogin(user, () => {
+            this.authService.identityCheck();
+            this.hideSpinner(SpinnerType.BallAtom);
           })
-        break;
+          break;
       }
-    });
 
-    this.authService.identityCheck();
-    this.hideSpinner(SpinnerType.BallAtom)
+      });
    }
 
   ngOnInit(): void {
