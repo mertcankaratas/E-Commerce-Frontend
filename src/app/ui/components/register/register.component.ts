@@ -58,7 +58,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
    const result : CreateUser = await this.userService.create(user);
 
-   if(result.suceeded){
+   if(result.succeeded){
     this.toastrService.message(result.message,"Kullanıcı Kaydı Başarılı",{
       messageType:ToastrMessageType.Success,
       position:ToastrPosition.TopRight

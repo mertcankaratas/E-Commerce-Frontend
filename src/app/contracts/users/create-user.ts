@@ -1,4 +1,4 @@
 export class CreateUser{
-  suceeded:boolean;
+  succeeded:boolean;
   message:string;
 }
