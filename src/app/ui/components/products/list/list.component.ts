@@ -1,3 +1,5 @@
+import { async } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { ListProduct } from './../../../../contracts/products/list-product';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,19 +11,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
+  currentPageNo:number;
   products: ListProduct[];
-  constructor(private productService:ProductService) { }
+  constructor(private productService:ProductService,private activatedRoute:ActivatedRoute) { }
 
-  async ngOnInit()  {
-    const data :{totalProductCount: Number,products:ListProduct[]} = await this.productService.read(0,12,
-      ()=>{
+  ngOnInit()  {
+    this.activatedRoute.params.subscribe(async params=>{
 
-    },
-    errorMessage=>{
+      this.currentPageNo = parseInt(params["pageNo"] ?? 1);
+      const data :{totalProductCount: Number,products:ListProduct[]} = await this.productService.read(this.currentPageNo-1,12,
+        ()=>{
 
+      },
+      errorMessage=>{
+
+      });
+
+      this.products = data.products;
     });
 
-    this.products = data.products;
+
   }
 
 }
