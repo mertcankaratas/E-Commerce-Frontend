@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="card" style="width: 13.5rem; float: left; margin: 5px;" *ngFor="let product of products;">
+    <img src="../../../../../assets/default-product.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{product.name}}</h5>
+      <p class="card-text">Fiyat : {{product.price | currency:'₺'}} <br/>
+      Stock : {{product.stock}}
+      </p>
+      <a href="#" class="btn btn-success">Go somewhere</a>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>
+
+
+</div>

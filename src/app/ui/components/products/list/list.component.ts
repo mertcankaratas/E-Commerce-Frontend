@@ -1,3 +1,5 @@
+import { ListProduct } from './../../../../contracts/products/list-product';
+import { ProductService } from 'src/app/services/common/models/product.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  products: ListProduct[];
+  constructor(private productService:ProductService) { }
 
-  ngOnInit(): void {
+  async ngOnInit()  {
+    const data :{totalProductCount: Number,products:ListProduct[]} = await this.productService.read(0,12,
+      ()=>{
+
+    },
+    errorMessage=>{
+
+    });
+
+    this.products = data.products;
   }
 
 }
