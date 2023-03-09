@@ -10,6 +10,7 @@ import { BaseDialog } from './../base/base-dialog';
 import { Component, Inject, OnInit, Output } from '@angular/core';
 import { FileUploadOptions } from 'src/app/services/common/file-upload/file-upload.component';
 import { MatCard } from '@angular/material/card';
+import { stringify } from 'querystring';
 
 declare var $:any;
 
@@ -62,9 +63,14 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
     });
 
       }
-    })
+    });
 
 
+  }
+
+
+  showCase(imageId:string){
+    alert("image id : " + imageId + "- Product Id : " + this.data );
   }
 
 }

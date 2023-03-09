@@ -11,19 +11,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ProductService {
 
-  constructor(private httpClientService:HttpClientService) { }
+  constructor(private httpClientService: HttpClientService) { }
 
-  create(product:CreateProduct,successCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void){
+  create(product: CreateProduct, successCallBack?: () => void, errorCallBack?: (errorMessage: string) => void) {
     this.httpClientService.post({
-      controller:"products"
-    },product).subscribe(result=>{
+      controller: "products"
+    }, product).subscribe(result => {
       successCallBack();
-    },(errorResponse:HttpErrorResponse)=>{
-      const _error: Array<{key:string, value:Array<string>}> = errorResponse.error;
-      let message="";
-      _error.forEach((v,index)=>{
-        v.value.forEach((_v,_index)=>{
-          message +=`${_v}<br>`;
+    }, (errorResponse: HttpErrorResponse) => {
+      const _error: Array<{ key: string, value: Array<string> }> = errorResponse.error;
+      let message = "";
+      _error.forEach((v, index) => {
+        v.value.forEach((_v, _index) => {
+          message += `${_v}<br>`;
         });
       });
 
@@ -33,47 +33,61 @@ export class ProductService {
   }
 
 
- async read(page:number =0,size:number=5,successCallback?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{totalProductCount:number;products: ListProduct[]}>{
-   const promiseData: Promise<{totalProductCount:number;products: ListProduct[]}>= this.httpClientService.get<{totalProductCount:number;products: ListProduct[]}>({
-      controller:"products",
-      queryString:`page=${page}&size=${size}`
+  async read(page: number = 0, size: number = 5, successCallback?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number; products: ListProduct[] }> {
+    const promiseData: Promise<{ totalProductCount: number; products: ListProduct[] }> = this.httpClientService.get<{ totalProductCount: number; products: ListProduct[] }>({
+      controller: "products",
+      queryString: `page=${page}&size=${size}`
 
     }).toPromise();
 
-    promiseData.then(d=>successCallback())
-    .catch((errorResponse:HttpErrorResponse)=>errorCallBack(errorResponse.message))
+    promiseData.then(d => successCallback())
+      .catch((errorResponse: HttpErrorResponse) => errorCallBack(errorResponse.message))
 
     return await promiseData;
   }
 
- async delete(id:string){
-    const deleteObservable: Observable<any> =this.httpClientService.delete<any>({
-      controller:"products"
-    },id);
+  async delete(id: string) {
+    const deleteObservable: Observable<any> = this.httpClientService.delete<any>({
+      controller: "products"
+    }, id);
 
     await firstValueFrom(deleteObservable);
   }
 
-  async readImages(id:string,successCallback?:()=>void):Promise<ListProductImage[]>{
-   const getObservable:Observable<ListProductImage[]>= this.httpClientService.get<ListProductImage[]>({
-      action:"getproductimages",
-      controller:"products"
-    },id);
+  async readImages(id: string, successCallback?: () => void): Promise<ListProductImage[]> {
+    const getObservable: Observable<ListProductImage[]> = this.httpClientService.get<ListProductImage[]>({
+      action: "getproductimages",
+      controller: "products"
+    }, id);
 
-    const images:ListProductImage[]=await firstValueFrom(getObservable);
+    const images: ListProductImage[] = await firstValueFrom(getObservable);
     successCallback();
 
-   return images;
+    return images;
   }
 
-  async deleteImage(id:string,imageId:string,successCallBack?:()=>void){
-    const deleteObservable= this.httpClientService.delete({
-      action:"deleteproductimage",
-      controller:"products",
-      queryString:`imageId=${imageId}`,
-    },id);
+  async deleteImage(id: string, imageId: string, successCallBack?: () => void) {
+    const deleteObservable = this.httpClientService.delete({
+      action: "deleteproductimage",
+      controller: "products",
+      queryString: `imageId=${imageId}`,
+    }, id);
 
     await firstValueFrom(deleteObservable);
     successCallBack();
+  }
+
+
+  async changeShowcaseImage(imageId: string, productId: string, successCallBack?: () => void):Promise<void> {
+    const changeShowcaseImageObservable = this.httpClientService.put({
+      controller:"products",
+      action:"ChangeShowcaseImage",
+      queryString:`imageId=${imageId}&productId=${productId}`
+    },{});
+
+    await firstValueFrom(changeShowcaseImageObservable);
+    successCallBack();
+
+
   }
 }
