@@ -33,6 +33,22 @@ export class ListComponent implements OnInit {
         });
 
       this.products = data.products;
+
+
+       this.products = this.products.map(p=>{
+         const listProduct:ListProduct={
+            id:p.id,
+            name:p.name,
+            price:p.price,
+            stock:p.stock,
+            updatedDate:p.updatedDate,
+            createdDate:p.createdDate,
+            imagePath:p.productImageFiles.length ? p.productImageFiles.find(p=>p.showcase).path : ""
+          }
+          return listProduct;
+       });
+
+
       this.totalProductCount = data.totalProductCount;
       this.totalPageCount = Math.ceil(this.totalProductCount / this.pageSize);
 
