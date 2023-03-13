@@ -12,7 +12,7 @@ import { FileUploadOptions } from 'src/app/services/common/file-upload/file-uplo
 import { MatCard } from '@angular/material/card';
 import { stringify } from 'querystring';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-select-product-image-dialog',
@@ -21,46 +21,45 @@ declare var $:any;
 })
 export class SelectProductImageDialogComponent extends BaseDialog<SelectProductImageDialogComponent> implements OnInit {
 
-  constructor(dialogRef :MatDialogRef<SelectProductImageDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data :SelectProductImageState | string,
-    private productService:ProductService,
-    private spinner:NgxSpinnerService,
-    private dialogService:DialogService)
-  {
+  constructor(dialogRef: MatDialogRef<SelectProductImageDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: SelectProductImageState | string,
+    private productService: ProductService,
+    private spinner: NgxSpinnerService,
+    private dialogService: DialogService) {
     super(dialogRef)
   }
 
 
 
- @Output() options:Partial<FileUploadOptions>={
-    accept:".png, .jpg, .jpeg, .gif",
-    action:"upload",
-    controller:"products",
-    explanation:"Ürün seçmini seçin veya buraya sürükleyin",
-    isAdminPage:true,
-    queryString:`id=${this.data}`
+  @Output() options: Partial<FileUploadOptions> = {
+    accept: ".png, .jpg, .jpeg, .gif",
+    action: "upload",
+    controller: "products",
+    explanation: "Ürün seçmini seçin veya buraya sürükleyin",
+    isAdminPage: true,
+    queryString: `id=${this.data}`
   };
 
 
-  images:ListProductImage[];
- async ngOnInit() {
+  images: ListProductImage[];
+  async ngOnInit() {
     this.spinner.show(SpinnerType.BallAtom);
-    this.images = await this.productService.readImages(this.data as string,()=> this.spinner.hide(SpinnerType.BallAtom));
+    this.images = await this.productService.readImages(this.data as string, () => this.spinner.hide(SpinnerType.BallAtom));
   }
 
- async deleteImage(imageId:string,event:any){
+  async deleteImage(imageId: string, event: any) {
 
     this.dialogService.openDialog({
-      componentType:DeleteDialogComponent,
-      data:DeleteState.Yes,
-      afterClosed:async()=>{
+      componentType: DeleteDialogComponent,
+      data: DeleteState.Yes,
+      afterClosed: async () => {
         this.spinner.show(SpinnerType.BallAtom);
-    await  this.productService.deleteImage(this.data as string,imageId,()=>{
-    this.spinner.hide(SpinnerType.BallAtom);
-    var card = $(event.srcElement).parent().parent();
+        await this.productService.deleteImage(this.data as string, imageId, () => {
+          this.spinner.hide(SpinnerType.BallAtom);
+          var card = $(event.srcElement).parent().parent();
 
-    card.fadeOut(500);
-    });
+          card.fadeOut(500);
+        });
 
       }
     });
@@ -69,11 +68,15 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
   }
 
 
-  showCase(imageId:string){
-    alert("image id : " + imageId + "- Product Id : " + this.data );
+  showCase(imageId: string) {
+    this.spinner.show(SpinnerType.BallAtom);
+    this.productService.changeShowcaseImage(imageId, this.data as string, () => {
+      this.spinner.hide(SpinnerType.BallAtom);
+
+    });
   }
 
 }
-  export enum SelectProductImageState{
-    Close
-  }
+export enum SelectProductImageState {
+  Close
+}
