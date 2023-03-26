@@ -1,3 +1,4 @@
+import { HttpClientService } from './services/common/http-client.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 import { AuthService } from './services/common/auth.service';
 import { Component } from '@angular/core';
@@ -11,7 +12,17 @@ declare var $:any
 export class AppComponent {
 
 
-  constructor(public authService:AuthService,private toastrService:CustomToastrService,private router:Router) {
+  constructor(public authService:AuthService,private toastrService:CustomToastrService,private router:Router,httpClientService:HttpClientService) {
+
+    httpClientService.put({
+      controller:"baskets"
+    },{
+      basketItemId:"1e6c5206-372f-4dac-87f2-ba7c5b46e87e",
+      quantity:"4"
+    }).subscribe(data=>{
+      debugger;
+    });
+
     authService.identityCheck();
   }
 
