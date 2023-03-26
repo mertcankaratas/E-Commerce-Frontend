@@ -12,18 +12,9 @@ declare var $:any
 export class AppComponent {
 
 
-  constructor(public authService:AuthService,private toastrService:CustomToastrService,private router:Router,httpClientService:HttpClientService) {
+  constructor(public authService:AuthService,private toastrService:CustomToastrService,private router:Router) {
 
-    httpClientService.put({
-      controller:"baskets"
-    },{
-      basketItemId:"1e6c5206-372f-4dac-87f2-ba7c5b46e87e",
-      quantity:"4"
-    }).subscribe(data=>{
-      debugger;
-    });
-
-    authService.identityCheck();
+  authService.identityCheck();
   }
 
 
