@@ -1,3 +1,8 @@
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from './../../../../services/ui/custom-toastr.service';
+import { CreateBasketItem } from './../../../../contracts/basket/create-basket-item';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BaseComponent, SpinnerType } from './../../../../base/base.component';
+import { BasketService } from './../../../../services/common/models/basket.service';
 import { BaseUrl } from './../../../../contracts/products/base-url';
 import { FileService } from './../../../../services/common/models/file.service';
 import { async } from 'rxjs';
@@ -5,13 +10,14 @@ import { ActivatedRoute } from '@angular/router';
 import { ListProduct } from './../../../../contracts/products/list-product';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { Component, OnInit } from '@angular/core';
+import { SplitInterpolation } from '@angular/compiler';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends BaseComponent implements OnInit {
 
   currentPageNo: number;
   totalProductCount: number;
@@ -20,7 +26,9 @@ export class ListComponent implements OnInit {
   pageList: number[] = [];
   baseUrl: BaseUrl;
   products: ListProduct[];
-  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute, private fileService: FileService) { }
+  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute, private fileService: FileService,private basketService:BasketService,spinner:NgxSpinnerService,private customToastrService:CustomToastrService) {
+    super(spinner);
+   }
 
   async ngOnInit() {
     this.baseUrl = await this.fileService.getBaseStorageUrl();
@@ -79,6 +87,22 @@ export class ListComponent implements OnInit {
     });
 
 
+  }
+
+
+ async addToBasket(product:ListProduct){
+    this.showSpinner(SpinnerType.BallAtom);
+    let _basketItem:CreateBasketItem = new CreateBasketItem();
+    _basketItem.productId = product.id;
+    _basketItem.quantity =1;
+
+   await this.basketService.add(_basketItem);
+   this.hideSpinner(SpinnerType.BallAtom);
+
+   this.customToastrService.message("Ürün sepete eklenmiştir.","Sepete Eklendi",{
+      messageType:ToastrMessageType.Success,
+      position:ToastrPosition.TopRight
+   });
   }
 
 }

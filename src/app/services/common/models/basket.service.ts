@@ -22,10 +22,10 @@ async get():Promise<ListBasketItem[]>{
  return await firstValueFrom(observable)
 }
 
-async add(product:CreateBasketItem):Promise<any>{
+async add(basketItem:CreateBasketItem):Promise<any>{
   const observable:Observable<any> = this.httpClientService.post({
     controller:"baskets"
-  },product);
+  },basketItem);
 
   await firstValueFrom(observable);
 }
