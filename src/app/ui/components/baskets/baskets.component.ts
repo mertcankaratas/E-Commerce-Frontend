@@ -1,3 +1,4 @@
+import { UpdateBasketItem } from './../../../contracts/basket/update-basket-item';
 import { ListBasketItem } from './../../../contracts/basket/list-basket-item';
 import { BasketService } from './../../../services/common/models/basket.service';
 import { BaseComponent, SpinnerType } from './../../../base/base.component';
@@ -21,6 +22,19 @@ export class BasketsComponent extends BaseComponent implements OnInit {
 
     this.showSpinner(SpinnerType.BallAtom);
     this.basketItems = await this.basketService.get();
+    this.hideSpinner(SpinnerType.BallAtom);
+  }
+
+
+  changeQuantity(object:any){
+    this.showSpinner(SpinnerType.BallAtom);
+    const basketItemId:string = object.target.attributes["id"].value;
+    console.log(basketItemId);
+    const quantity:number = object.target.value;
+    const basketItem : UpdateBasketItem = new UpdateBasketItem();
+    basketItem.basketItemId=basketItemId;
+    basketItem.quantity = quantity;
+    this.basketService.updateQuantity(basketItem);
     this.hideSpinner(SpinnerType.BallAtom);
   }
 

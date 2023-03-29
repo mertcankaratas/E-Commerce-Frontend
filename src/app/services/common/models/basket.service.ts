@@ -31,7 +31,7 @@ async add(basketItem:CreateBasketItem):Promise<any>{
 }
 
 
-async put(basketItem:UpdateBasketItem):Promise<void>{
+async updateQuantity(basketItem:UpdateBasketItem):Promise<void>{
   const observable:Observable<any> = this.httpClientService.put({
     controller:"baskets",
   },basketItem);

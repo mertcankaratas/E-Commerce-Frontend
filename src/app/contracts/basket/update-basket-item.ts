@@ -1,4 +1,4 @@
 export class UpdateBasketItem{
-  baksetItemId:string;
+  basketItemId:string;
   quantity:number;
 }

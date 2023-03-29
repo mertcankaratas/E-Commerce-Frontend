@@ -22,7 +22,7 @@
               <td>{{basketItem.price}}</td>
 
               <td>
-                <input type="number" min="1" [value]="basketItem.quantity" style="width:60px;">
+                <input type="number" min="1" [value]="basketItem.quantity" style="width:60px;" data-id="{{basketItem.basketItemId}}" (change)="changeQuantity($event)">
 
               </td>
             </tr>
