@@ -16,12 +16,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Ürün 1</td>
-              <td>Fiyat 1</td>
+            <tr *ngFor="let basketItem of basketItems;let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{basketItem.name}}</td>
+              <td>{{basketItem.price}}</td>
+
               <td>
-                <input type="number" min="1" value="2" style="width:60px;">
+                <input type="number" min="1" [value]="basketItem.quantity" style="width:60px;">
 
               </td>
             </tr>

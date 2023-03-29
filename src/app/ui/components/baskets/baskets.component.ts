@@ -1,3 +1,5 @@
+import { ListBasketItem } from './../../../contracts/basket/list-basket-item';
+import { BasketService } from './../../../services/common/models/basket.service';
 import { BaseComponent, SpinnerType } from './../../../base/base.component';
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -9,13 +11,17 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class BasketsComponent extends BaseComponent implements OnInit {
 
-  constructor(spinner :NgxSpinnerService) {
+  constructor(spinner :NgxSpinnerService,private basketService:BasketService) {
     super(spinner)
    }
 
-  ngOnInit(): void {
-    // this.showSpinner(SpinnerType.BallAtom);
+  basketItems: ListBasketItem[];
 
+   async ngOnInit(): Promise<void> {
+
+    this.showSpinner(SpinnerType.BallAtom);
+    this.basketItems = await this.basketService.get();
+    this.hideSpinner(SpinnerType.BallAtom);
   }
 
 }
