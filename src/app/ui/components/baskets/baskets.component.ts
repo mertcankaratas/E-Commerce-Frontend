@@ -5,6 +5,8 @@ import { BaseComponent, SpinnerType } from './../../../base/base.component';
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+declare var $:any;
+
 @Component({
   selector: 'app-baskets',
   templateUrl: './baskets.component.html',
@@ -36,6 +38,19 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     basketItem.quantity = quantity;
     this.basketService.updateQuantity(basketItem);
     this.hideSpinner(SpinnerType.BallAtom);
+  }
+
+
+ async removeBasketItem(basketItemId:string){
+      this.showSpinner(SpinnerType.BallAtom);
+
+      await this.basketService.remove(basketItemId);
+
+      $("."+basketItemId).fadeOut(500,()=> this.hideSpinner(SpinnerType.BallAtom));
+
+
+
+
   }
 
 }
