@@ -13,12 +13,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
 import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from '@abacritt/angularx-social-login';
+import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DynamicLoadComponentDirective
 
   ],
   imports: [
